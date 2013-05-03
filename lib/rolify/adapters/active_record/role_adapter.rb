@@ -71,7 +71,7 @@ module Rolify
           values << role << (resource.is_a?(Class) ? Rolify.resource_type(resource) : Rolify.resource_type(resource.class))
           if !resource.is_a? Class
             query += " OR ((#{role_table}.name = ?) AND (#{role_table}.resource_type = ?) AND (#{role_table}.resource_id = ?))"
-            values << role << resource.class.name << resource.id
+            values << role << Rolify.resource_type(resource.class) << resource.id
           end
           query += ")"
         end

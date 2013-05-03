@@ -77,9 +77,9 @@ module Rolify
         return [{ :name => role }] if resource == :any
         query = [{ :name => role, :resource_type => nil, :resource_id => nil }]
         if resource
-          query << { :name => role, :resource_type => (resource.is_a?(Class) ? resource.to_s : resource.class.name), :resource_id => nil }
+          query << { :name => role, :resource_type => (resource.is_a?(Class) ? Rolify.resource_type(resource) : Rolify.resource_type(resource.class)), :resource_id => nil }
           if !resource.is_a? Class
-            query << { :name => role, :resource_type => resource.class.name, :resource_id => resource.id }
+            query << { :name => role, :resource_type => Rolify.resource_type(resource.class), :resource_id => resource.id }
           end
         end
         query
