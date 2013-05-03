@@ -25,7 +25,8 @@ module Rolify
     end
     
     def applied_roles
-      self.roles + self.class.role_class.where(:resource_type => self.class.to_s, :resource_id => nil)
+      puts "applied roles has #{Rolify.resource_type(self.class)}"
+      self.roles + self.class.role_class.where(:resource_type => Rolify.resource_type(self.class), :resource_id => nil)
     end
   end
 end

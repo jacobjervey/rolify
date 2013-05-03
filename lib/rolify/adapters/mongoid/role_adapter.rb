@@ -16,7 +16,6 @@ module Rolify
 
       def add(relation, role)
         relation.roles << role
-        puts "adding a role"
       end
 
       def remove(relation, role_name, resource = nil)

@@ -15,10 +15,6 @@ module Rolify
         relation.where("#{quote(role_class.table_name)}.#{role_class.primary_key} IN (?) AND ((resource_id = #{quote(relation.table_name)}.#{relation.primary_key}) OR (resource_id IS NULL))", roles)
       end
 
-      def add_role(resource, role)
-        resource.role_ids |= [role.id]
-      end
-
       private
 
       def quote(column)

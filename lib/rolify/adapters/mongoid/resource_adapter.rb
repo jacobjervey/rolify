@@ -22,11 +22,6 @@ module Rolify
         resources.delete_if { |resource| (resource.applied_roles & roles).empty? }
         resources
       end
-
-      def add_role(resource, role)
-        resource.roles << role
-        puts "blam nigga"
-      end
     end
   end
 end

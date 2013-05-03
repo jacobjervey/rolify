@@ -14,9 +14,9 @@ module Rolify
   def self.resource_type(resource)
     if Rolify.table_name
       if Rolify.orm == "mongoid"
-        resource.collection.name
+        resource.collection.name.camelize.singularize
       elsif Rolify.orm == "active_record"
-        resource.table_name
+        resource.table_name.camelize.singularize
       else
         resource.name
       end
