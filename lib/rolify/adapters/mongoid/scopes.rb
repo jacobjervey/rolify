@@ -7,7 +7,7 @@ module Rolify
       
       def class_scoped(resource_type = nil)
         where_conditions = { :resource_type.ne => nil, :resource_id => nil }
-        where_conditions = { :resource_type => resource_type.name, :resource_id => nil } if resource_type
+        where_conditions = { :resource_type => Rolify.resource_type(resource_type), :resource_id => nil } if resource_type
         where(where_conditions)
       end
       
@@ -15,9 +15,9 @@ module Rolify
         where_conditions = { :resource_type.ne => nil, :resource_id.ne => nil }
         if resource_type
           if resource_type.is_a? Class
-            where_conditions = { :resource_type => resource_type.name, :resource_id.ne => nil }
+            where_conditions = { :resource_type => Rolify.resource_type(resource_type), :resource_id.ne => nil }
           else
-            where_conditions = { :resource_type => resource_type.class.name, :resource_id => resource_type.id }
+            where_conditions = { :resource_type => Rolify.resource_type(resource_type.class), :resource_id => resource_type.id }
           end
         end
         where(where_conditions)
