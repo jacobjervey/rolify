@@ -16,6 +16,7 @@ module Rolify
       if !roles.include?(role)
         self.class.define_dynamic_method(role_name, resource) if Rolify.dynamic_shortcuts
         self.class.adapter.add(self, role)
+        resource.class.adapter.add_role(resource, role)
       end
       role
     end

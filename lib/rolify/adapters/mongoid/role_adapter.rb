@@ -16,6 +16,7 @@ module Rolify
 
       def add(relation, role)
         relation.roles << role
+        puts "adding a role"
       end
 
       def remove(relation, role_name, resource = nil)
@@ -34,7 +35,7 @@ module Rolify
         #  role.destroy if role.send(user_class.to_s.tableize.to_sym).empty?
         #end
         cond = { :name => role_name }
-        cond[:resource_type] = (resource.is_a?(Class) ? resource.to_s : resource.class.name) if resource
+        cond[:resource_type] = (resource.is_a?(Class) ? Rolify.resource_type(resource) : Rolify.resource_type(resource.class)) if resource
         cond[:resource_id] = resource.id if resource && !resource.is_a?(Class)
         roles = relation.roles.where(cond)
         roles.each do |role| 
