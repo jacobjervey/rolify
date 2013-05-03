@@ -11,6 +11,20 @@ module Rolify
 
   attr_accessor :role_cname, :adapter, :role_table_name
 
+  def self.resource_type(resource)
+    if Rolify.table_name
+      if Rolify.orm == "mongoid"
+        resource.collection.name
+      elsif Rolify.orm == "active_record"
+        resource.table_name
+      else
+        resource.name
+      end
+    else
+      resource.name
+    end
+  end
+
   def rolify(options = {})
     include Role
     extend Dynamic if Rolify.dynamic_shortcuts

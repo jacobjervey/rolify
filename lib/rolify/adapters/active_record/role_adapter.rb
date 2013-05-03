@@ -18,7 +18,7 @@ module Rolify
 
       def remove(relation, role_name, resource = nil)
         cond = { :name => role_name }
-        cond[:resource_type] = (resource.is_a?(Class) ? resource.to_s : resource.class.name) if resource
+        cond[:resource_type] = (resource.is_a?(Class) ? Rolify.resource_type(resource) : Rolify.resource_type(resource.class)) if resource
         cond[:resource_id] = resource.id if resource && !resource.is_a?(Class)
         roles = relation.roles.where(cond)
         if roles
@@ -68,7 +68,7 @@ module Rolify
         if resource
           query.insert(0, "(")
           query += " OR ((#{role_table}.name = ?) AND (#{role_table}.resource_type = ?) AND (#{role_table}.resource_id IS NULL))"
-          values << role << (resource.is_a?(Class) ? resource.to_s : resource.class.name)
+          values << role << (resource.is_a?(Class) ? Rolify.resource_type(resource) : Rolify.resource_type(resource.class))
           if !resource.is_a? Class
             query += " OR ((#{role_table}.name = ?) AND (#{role_table}.resource_type = ?) AND (#{role_table}.resource_id = ?))"
             values << role << resource.class.name << resource.id

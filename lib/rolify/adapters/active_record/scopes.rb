@@ -7,7 +7,7 @@ module Rolify
       
       def class_scoped(resource_type = nil)
         where_conditions = "resource_type IS NOT NULL AND resource_id IS NULL"
-        where_conditions = [ "resource_type = ? AND resource_id IS NULL", resource_type.name ] if resource_type
+        where_conditions = [ "resource_type = ? AND resource_id IS NULL", Rolify.resource_type(resource_type) ] if resource_type
         where(where_conditions)
       end
       
@@ -15,9 +15,9 @@ module Rolify
         where_conditions = "resource_type IS NOT NULL AND resource_id IS NOT NULL"
         if resource_type
           if resource_type.is_a? Class
-            where_conditions = [ "resource_type = ? AND resource_id IS NOT NULL", resource_type.name ]
+            where_conditions = [ "resource_type = ? AND resource_id IS NOT NULL", Rolify.resource_type(resource_type) ]
           else
-            where_conditions = [ "resource_type = ? AND resource_id = ?", resource_type.class.name, resource_type.id ]
+            where_conditions = [ "resource_type = ? AND resource_id = ?", Rolify.resource_type(resource_type.class), resource_type.id ]
           end
         end
         where(where_conditions)

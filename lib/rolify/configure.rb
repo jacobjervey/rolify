@@ -2,7 +2,8 @@ module Rolify
   module Configure
     @@dynamic_shortcuts = false
     @@orm = "active_record"
-     
+    @@table_name = false
+
     def configure(*role_cnames)
       return if !sanity_check(role_cnames)
       yield self if block_given?
@@ -16,6 +17,14 @@ module Rolify
       @@dynamic_shortcuts = is_dynamic
     end
 
+    def table_name
+      @@table_name
+    end
+
+    def table_name=(use_table_name)
+      @@table_name = use_table_name
+    end
+
     def orm
       @@orm
     end
@@ -27,6 +36,10 @@ module Rolify
     def use_mongoid
       self.orm = "mongoid"
     end
+
+    def use_table_name
+      self.table_name = true
+    end
     
     def use_dynamic_shortcuts
       self.dynamic_shortcuts = true #if defined?(Rails::Server) || defined?(Rails::Console)
@@ -36,6 +49,7 @@ module Rolify
       configure do |config|
         config.dynamic_shortcuts = false
         config.orm = "active_record"
+        config.table_name = false
       end
     end
     

@@ -7,7 +7,7 @@ module Rolify
     module ClassMethods 
       def find_roles(role_name = nil, user = nil)
         roles = user && (user != :any) ? user.roles : self.role_class
-        roles = roles.where(:resource_type => self.to_s)
+        roles = roles.where(:resource_type => Rolify.resource_type(self))
         roles = roles.where(:name => role_name.to_s) if role_name && (role_name != :any)
         roles
       end
